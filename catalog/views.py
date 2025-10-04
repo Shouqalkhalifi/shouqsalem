@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from .models import Product
 
-# Create your views here.
+
+def product_list(request):
+    """عرض جميع المنتجات وتمريرها إلى القالب"""
+    products = Product.objects.all()
+    return render(request, "catalogt/product_list.html", {"products": products})

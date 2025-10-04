@@ -38,7 +38,13 @@ ROOT_URLCONF = 'shouqsalem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # مسارات القوالب التي وضعتِها
+        'DIRS': [
+            BASE_DIR / 'templates',
+            BASE_DIR / 'templates' / 'identityt',
+            BASE_DIR / 'templates' / 'catalogt',
+            BASE_DIR / 'templates' / 'sales',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,12 +87,20 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # اللغة والتوقيت
-LANGUAGE_CODE = 'ar'       # تعريب الواجهة
-TIME_ZONE = 'Asia/Riyadh'  # توقيت الرياض
+LANGUAGE_CODE = 'ar'        # تعريب الواجهة
+TIME_ZONE = 'Asia/Riyadh'   # توقيت الرياض
 USE_I18N = True
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
+# الملفات الثابتة Static
+STATIC_URL = '/static/'                         # رابط الوصول للملفات الثابتة
+STATICFILES_DIRS = [BASE_DIR / 'static']        # مجلد التطوير (ضع فيه css/js/images)
+STATIC_ROOT = BASE_DIR / 'staticfiles'          # مجلد الجمع عند الإنتاج (collectstatic)
+
+
+# الملفات المرفوعة (وسائط المستخدم Media)
+MEDIA_URL = '/media/'                           # الرابط على الويب
+MEDIA_ROOT = BASE_DIR / 'media'                 # المجلد المحلي لحفظ الصور/الملفات
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -1,0 +1,123 @@
+<footer
+  style="
+    background: #0b1222;
+    color: #e2e8f0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 40px;
+  "
+>
+  <style>
+    .footer-wrap {
+      max-width: 1200px;
+      margin: auto;
+      padding: 28px 16px;
+    }
+    .fgrid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 18px;
+    }
+    .f-title {
+      font-weight: 800;
+      margin: 0 0 10px;
+    }
+    .f-link {
+      display: block;
+      color: #cbd5e1;
+      text-decoration: none;
+      margin: 6px 0;
+      padding: 4px 6px;
+      border-radius: 8px;
+    }
+    .f-link:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .badge {
+      display: inline-block;
+      background: #22c55e;
+      color: #06220e;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-weight: 700;
+      margin-top: 6px;
+    }
+    .copy {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      margin-top: 18px;
+      padding-top: 12px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 900px) {
+      .fgrid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .newsletter {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .newsletter input {
+      flex: 1;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #0f172a;
+      color: #e2e8f0;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .newsletter button {
+      background: #06b6d4;
+      color: #06232a;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .newsletter button:hover {
+      filter: brightness(1.05);
+    }
+  </style>
+
+  <div class="footer-wrap">
+    <div class="fgrid">
+      <!-- العمود الأول -->
+      <div>
+        <h3 class="f-title">متجر شوق</h3>
+        <p style="margin: 0; color: #94a3b8">
+          جميع ما تحتاجه من منتجات رقمية وأجهزة أصلية.
+        </p>
+        <span class="badge">شحن سريع</span>
+        <span class="badge">دفع آمن</span>
+      </div>
+
+      <!-- العمود الثاني -->
+      <div>
+        <h4 class="f-title">روابط</h4>
+        <a class="f-link" href="/catalog/">المنتجات</a>
+        <a class="f-link" href="/sales/cart/">سلة المشتريات</a>
+        <a class="f-link" href="/identity/login/">تسجيل الدخول</a>
+        <a class="f-link" href="/identity/register/">إنشاء حساب</a>
+      </div>
+
+      <!-- العمود الثالث -->
+      <div>
+        <h4 class="f-title">النشرة البريدية</h4>
+        <form class="newsletter" method="post" action="/subscribe/">
+          {% csrf_token %}
+          <input
+            type="email"
+            name="email"
+            placeholder="بريدك الإلكتروني"
+            required
+          />
+          <button type="submit">اشترك</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- الحقوق -->
+    <div class="copy">© {{ now|date:"Y" }} متجر شوق — جميع الحقوق محفوظة</div>
+  </div>
+</footer>
