@@ -3,76 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>متجر شوق</title>
-    <style>
-      body {
-        font-family: "Noto Kufi Arabic", "Tahoma", sans-serif;
-        background: #f8fafc;
-        margin: 0;
-        padding: 0;
-        color: #0f172a;
-      }
-      .container {
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px;
-      }
-      .hero {
-        background: linear-gradient(
-          135deg,
-          rgba(34, 197, 94, 0.12),
-          rgba(6, 182, 212, 0.12)
-        );
-        border-radius: 16px;
-        padding: 24px;
-        margin-top: 20px;
-        text-align: center;
-      }
-      .hero h1 {
-        margin: 0 0 10px;
-      }
-      .hero p {
-        margin: 0;
-        color: #475569;
-      }
-      .cta {
-        margin-top: 16px;
-      }
-      .btn {
-        background: #22c55e;
-        color: #fff;
-        padding: 10px 16px;
-        border-radius: 8px;
-        text-decoration: none;
-        margin: 0 6px;
-        font-weight: bold;
-      }
-      .btn.sec {
-        background: #06b6d4;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 14px;
-        margin-top: 22px;
-      }
-      .card {
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 16px;
-        text-align: center;
-      }
-      .card h3 {
-        margin: 0 0 8px;
-      }
-      .badge {
-        background: #0b1222;
-        color: #cbd5e1;
-        padding: 4px 10px;
-        border-radius: 999px;
-        font-size: 12px;
-      }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   </head>
   <body>
     {% include "header.html" %}
@@ -91,20 +22,20 @@
       <!-- أقسام عامة -->
       <section class="grid">
         <div class="card">
-          <h3>منتجات رقمية <span class="badge">أكواد / ملفات</span></h3>
+          <h3><i class="fa-solid fa-code"></i> منتجات رقمية <span class="badge">أكواد / ملفات</span></h3>
           <p>استلام فوري بعد الدفع، مع إظهار الكود أو روابط التحميل.</p>
         </div>
         <div class="card">
-          <h3>أجهزة ملموسة <span class="badge">شحن سريع</span></h3>
+          <h3><i class="fa-solid fa-box"></i> أجهزة ملموسة <span class="badge">شحن سريع</span></h3>
           <p>شحن آمن وسريع إلى باب منزلك.</p>
         </div>
         <div class="card">
-          <h3>دفع آمن <span class="badge">SSL</span></h3>
+          <h3><i class="fa-solid fa-lock"></i> دفع آمن <span class="badge">SSL</span></h3>
           <p>طرق دفع موثوقة مع فواتير فورية عبر البريد الإلكتروني.</p>
         </div>
       </section>
 
-      <!-- استدعاء قسم المنتجات -->
+      <!-- استدعاء المنتجات -->
       {% include "catalogt/product_list.html" %}
     </main>
 
