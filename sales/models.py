@@ -28,3 +28,17 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.product.name} (x{self.quantity})"
+
+
+class Favorite(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="favorites", verbose_name="الحساب")
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="favorited_by", verbose_name="المنتج")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("account", "product")
+        verbose_name = "مفضلة"
+        verbose_name_plural = "المفضلات"
+
+    def __str__(self):
+        return f"{self.account.username} ❤ {self.product.name}"

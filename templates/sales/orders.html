@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}طلباتي | متجر شوق{% endblock %}
+
+{% block content %}
+<div class="py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="section-title mb-0">طلباتي</h2>
+  </div>
+
+  {% if orders %}
+    <div class="list-group">
+      {% for order in orders %}
+        <div class="list-group-item bg-white border rounded-3 mb-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <strong>طلب رقم #{{ order.id }}</strong>
+              <div class="text-muted small mt-1">بتاريخ: {{ order.created_at|date:"Y-m-d H:i" }}</div>
+            </div>
+            <span class="badge {% if order.is_paid %}bg-success{% else %}bg-warning text-dark{% endif %}">
+              {% if order.is_paid %}مدفوع{% else %}قيد الدفع{% endif %}
+            </span>
+          </div>
+          <hr/>
+          {% if order.items.all %}
+          <div class="row g-3">
+            {% for item in order.items.all %}
+              <div class="col-md-6 col-lg-4">
+                <div class="d-flex align-items-center">
+                  {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" width="60" height="60" style="object-fit:cover" class="rounded me-3">
+                  {% endif %}
+                  <div>
+                    <div class="fw-semibold">{{ item.product.name }}</div>
+                    <div class="text-muted small">الكمية: {{ item.quantity }}</div>
+                    <div class="text-primary fw-bold">{{ item.price }} ر.س</div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+          {% else %}
+            <div class="text-muted">لا توجد عناصر.</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="text-center text-muted py-5 border rounded-3 bg-white">
+      <i class="fas fa-receipt fa-3x mb-3"></i>
+      <p class="mb-0">لا توجد طلبات حتى الآن</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

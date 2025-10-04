@@ -1,44 +1,557 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>متجر شوق</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  </head>
-  <body>
-    {% include "header.html" %}
+{% extends 'base.html' %}
+{% load static %}
 
-    <main class="container">
-      <!-- قسم الترحيب -->
-      <section class="hero">
-        <h1>مرحبًا بك في متجر شوق</h1>
-        <p>منصة موحدة لبيع المنتجات الرقمية والأجهزة الملموسة.</p>
-        <div class="cta">
-          <a href="/catalog/?type=digital" class="btn">استعرض الرقمية</a>
-          <a href="/catalog/?type=physical" class="btn sec">استعرض الأجهزة</a>
-        </div>
-      </section>
+{% block title %}الرئيسية | متجر نكسا{% endblock %}
 
-      <!-- أقسام عامة -->
-      <section class="grid">
-        <div class="card">
-          <h3><i class="fa-solid fa-code"></i> منتجات رقمية <span class="badge">أكواد / ملفات</span></h3>
-          <p>استلام فوري بعد الدفع، مع إظهار الكود أو روابط التحميل.</p>
-        </div>
-        <div class="card">
-          <h3><i class="fa-solid fa-box"></i> أجهزة ملموسة <span class="badge">شحن سريع</span></h3>
-          <p>شحن آمن وسريع إلى باب منزلك.</p>
-        </div>
-        <div class="card">
-          <h3><i class="fa-solid fa-lock"></i> دفع آمن <span class="badge">SSL</span></h3>
-          <p>طرق دفع موثوقة مع فواتير فورية عبر البريد الإلكتروني.</p>
-        </div>
-      </section>
+{% block content %}
+<!-- Hero Section -->
+<section class="hero text-white py-5 mb-5 mt-5"> <!-- 👈 أضفت mt-5 -->
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <!-- Text + CTAs -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-5 fw-bold mb-3">مرحباً بك في متجر نكسا</h1>
+                <p class="lead mb-4">اكتشف أحدث المنتجات الرقمية والأجهزة الإلكترونية بأسعار تنافسية</p>
 
-      <!-- استدعاء المنتجات -->
-      {% include "catalogt/product_list.html" %}
-    </main>
+                <!-- Hero tiles -->
+                <div class="row g-3">
+                    <div class="col-12 col-sm-6">
+                        <a href="{% url 'catalog:product_list' %}?type=digital" 
+                           class="text-decoration-none d-block hero-tile position-relative shadow-sm">
+                            <img src="{% static 'images/digitl.png' %}" alt="منتجات رقمية">
+                            <div class="tile-overlay"></div>
+                            <div class="tile-content">
+                                <i class="fas fa-file-download me-2"></i>
+                                منتجات رقمية
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <a href="{% url 'catalog:product_list' %}?type=physical" 
+                           class="text-decoration-none d-block hero-tile position-relative shadow-sm">
+                            <img src="{% static 'images/mlmos.jpg' %}" alt="منتجات ملموسة">
+                            <div class="tile-overlay"></div>
+                            <div class="tile-content">
+                                <i class="fas fa-box me-2"></i>
+                                منتجات ملموسة
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="d-flex flex-wrap gap-3 mt-3 justify-content-center justify-content-lg-start">
+                    <a href="#products" class="btn btn-light btn-lg px-4">تصفح المنتجات</a>
+                    <a href="#how-it-works" class="btn btn-outline-light btn-lg px-4">كيفية الشراء</a>
+                </div>
+            </div>
 
-    {% include "footer.html" %}
-  </body>
-</html>
+           <!-- Decorative preview -->
+           <div class="col-lg-6 d-none d-lg-block">
+            <div class="row g-3">
+                <div class="col-7">
+                    <div class="rounded-4 shadow hero-preview hero-preview--digital" style="height: 280px;"></div>
+                </div>
+                <div class="col-5">
+                    <div class="rounded-4 shadow hero-preview hero-preview--physical mb-3" style="height: 150px;"></div>
+                    <div class="rounded-4 shadow hero-preview hero-preview--digital" style="height: 120px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- Features Section -->
+<section class="mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                        <i class="fas fa-bolt fa-2x"></i>
+                    </div>
+                    <h4 class="h5 mb-3">توصيل فوري</h4>
+                    <p class="text-muted mb-0">استلم منتجاتك الرقمية فوراً بعد إتمام الدفع</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                        <i class="fas fa-shield-alt fa-2x"></i>
+                    </div>
+                    <h4 class="h5 mb-3">دفع آمن</h4>
+                    <p class="text-muted mb-0">معاملات مالية آمنة عبر بوابات دفع موثوقة</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body text-center p-4">
+                    <div class="bg-warning bg-opacity-10 text-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                        <i class="fas fa-headset fa-2x"></i>
+                    </div>
+                    <h4 class="h5 mb-3">دعم فني</h4>
+                    <p class="text-muted mb-0">فريق دعم فني متاح على مدار الساعة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section id="products" class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title mb-0">أحدث المنتجات</h2>
+        <div class="d-flex">
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-primary btn-sm">
+                عرض الكل <i class="fas fa-arrow-left me-1"></i>
+            </a>
+        </div>
+    </div>
+    
+    <!-- Product Tabs -->
+    <ul class="nav nav-tabs mb-4" id="productTabs" role="tablist">
+        <li class="nav-item">
+            <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab">
+                <i class="fas fa-th-large me-1"></i> الكل
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="digital-tab" data-bs-toggle="tab" data-bs-target="#digital" type="button" role="tab">
+                <i class="fas fa-file-download me-1"></i> منتجات رقمية
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" id="physical-tab" data-bs-toggle="tab" data-bs-target="#physical" type="button" role="tab">
+                <i class="fas fa-box me-1"></i> أجهزة ملموسة
+            </button>
+        </li>
+    </ul>
+    
+    <div class="tab-content" id="productTabsContent">
+        <!-- All Products Tab -->
+        <div class="tab-pane fade show active" id="all">
+            <div class="row g-4">
+                {% for product in all_products %}
+                <div class="col-lg-3 col-md-4 col-6">
+                    {% include 'catalogt/_product_card.html' with product=product %}
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-inbox fa-3x mb-3 text-muted"></i>
+                    <p class="mb-0 text-muted">لا توجد منتجات متاحة حالياً</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Digital Products Tab -->
+        <div class="tab-pane fade" id="digital">
+            <div class="row g-4">
+                {% for product in digital_products %}
+                <div class="col-lg-3 col-md-4 col-6">
+                    {% include 'catalogt/_product_card.html' with product=product %}
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-file-download fa-3x mb-3 text-muted"></i>
+                    <p class="mb-0 text-muted">لا توجد منتجات رقمية متاحة حالياً</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Physical Products Tab -->
+        <div class="tab-pane fade" id="physical" role="tabpanel" aria-labelledby="physical-tab">
+            <div class="row g-4">
+                {% for product in physical_products %}
+                <div class="col-lg-3 col-md-4 col-6">
+                    {% include 'catalogt/_product_card.html' with product=product %}
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <div class="text-muted">
+                        <i class="fas fa-box fa-3x mb-3"></i>
+                        <p class="mb-0">لا توجد أجهزة ملموسة متاحة حالياً</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="bg-light py-5 mb-5 rounded-3">
+    <div class="container">
+        <h2 class="text-center mb-5">كيفية الشراء</h2>
+        <div class="row g-4">
+            <div class="col-md-4 text-center">
+                <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <span class="display-5">1</span>
+                    </div>
+                    <h4 class="h5 mb-3">اختر المنتج</h4>
+                    <p class="text-muted mb-0">تصفح مجموعتنا الواسعة من المنتجات الرقمية والأجهزة واختر ما يناسبك</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <span class="display-5">2</span>
+                    </div>
+                    <h4 class="h5 mb-3">أكمل عملية الدفع</h4>
+                    <p class="text-muted mb-0">اختر طريقة الدفع المناسبة وأكمل عملية الشراء بسهولة وأمان</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="bg-white p-4 rounded-3 shadow-sm h-100">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <span class="display-5">3</span>
+                    </div>
+                    <h4 class="h5 mb-3">احصل على منتجك</h4>
+                    <p class="text-muted mb-0">استلم منتجك الرقمي فوراً أو تتبع شحنتك للأجهزة المادية</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="mb-5">
+    <h2 class="section-title mb-4">تصفح الأقسام</h2>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <a href="{% url 'catalog:product_list' %}?type=digital" class="text-decoration-none">
+                <div class="card border-0 shadow-sm h-100 hover-lift">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-file-download fa-2x"></i>
+                            </div>
+                            <div>
+                                <h3 class="h5 mb-1">المنتجات الرقمية</h3>
+                                <p class="text-muted mb-0">اشتراكات بث، برامج، دورات تدريبية وأكثر</p>
+                            </div>
+                            <i class="fas fa-arrow-left me-auto text-muted"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'catalog:product_list' %}?type=physical" class="text-decoration-none">
+                <div class="card border-0 shadow-sm h-100 hover-lift">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-box fa-2x"></i>
+                            </div>
+                            <div>
+                                <h3 class="h5 mb-1">أجهزة ملموسة</h3>
+                                <p class="text-muted mb-0">أجهزة عرض، ليزر، وملحقات إلكترونية</p>
+                            </div>
+                            <i class="fas fa-arrow-left me-auto text-muted"></i>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="bg-light py-5 rounded-3 mb-5">
+    <div class="container">
+        <h2 class="text-center mb-5">آراء عملائنا</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://via.placeholder.com/50" alt="User" class="rounded-circle me-3" width="50" height="50">
+                            <div>
+                                <h5 class="mb-0">أحمد محمد</h5>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">تجربة رائعة، اشتريت اشتراك نتفلكس واستلمت التفاصيل فوراً. أنصح الجميع بالتعامل مع متجر شوق.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://via.placeholder.com/50" alt="User" class="rounded-circle me-3" width="50" height="50">
+                            <div>
+                                <h5 class="mb-0">سارة عبدالله</h5>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">جهاز العرض الذي اشتريته يعمل بشكل ممتاز، والتوصيل كان سريعاً. شكراً لكم.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://via.placeholder.com/50" alt="User" class="rounded-circle me-3" width="50" height="50">
+                            <div>
+                                <h5 class="mb-0">خالد سعد</h5>
+                                <div class="text-warning">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0">خدمة عملاء ممتازة، ساعدوني في اختيار المنتج المناسب وكانوا سريعين في الرد على استفساراتي.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="bg-primary text-white py-5 rounded-3 mb-5">
+    <div class="container text-center">
+        <h2 class="mb-4">هل لديك استفسار؟</h2>
+        <p class="lead mb-4">فريق الدعم الفني لدينا جاهز لمساعدتك على مدار الساعة</p>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#contactModal" class="btn btn-light btn-lg px-4 me-2">اتصل بنا</a>
+        <a href="#faq" class="btn btn-outline-light btn-lg px-4">الأسئلة الشائعة</a>
+    </div>
+    </section>
+
+<!-- FAQ Section -->
+<section id="faq" class="py-5 mb-5">
+  <div class="container">
+    <h2 class="section-title mb-4">الأسئلة الشائعة</h2>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q1">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1" aria-expanded="true" aria-controls="a1">
+            كيف أستلم المنتج الرقمي بعد الدفع؟
+          </button>
+        </h2>
+        <div id="a1" class="accordion-collapse collapse show" aria-labelledby="q1" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            يُرسل رابط التنزيل أو بيانات الاشتراك إلى بريدك فور إتمام الدفع، كما تظهر في صفحة الطلبات.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2" aria-expanded="false" aria-controls="a2">
+            ما طرق الدفع المتاحة؟
+          </button>
+        </h2>
+        <div id="a2" class="accordion-collapse collapse" aria-labelledby="q2" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            نوفر طرق دفع آمنة ومتعددة. تواصل معنا من خلال زر "اتصل بنا" في الأعلى إن احتجت تفاصيل إضافية.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="q3">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3" aria-expanded="false" aria-controls="a3">
+            هل توجد سياسة استرجاع؟
+          </button>
+        </h2>
+        <div id="a3" class="accordion-collapse collapse" aria-labelledby="q3" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            نعم وفق الشروط. للمنتجات الرقمية يعتمد على حالة الاستخدام، وللملموسة خلال مدة محددة مع بقاء المنتج بحالته.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ====== Hero Section ====== */
+    .hero {
+        background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+        border-radius: 1rem;
+        padding: 4rem 2rem;
+        margin-bottom: 3rem;
+        overflow: hidden;
+        color: #fff;
+    }
+    body {
+        padding-top: 40px; /* ارتفاع الهيدر */
+    }
+    /* ====== Hero Tiles ====== */
+    .hero-tile {
+    min-height: 160px;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    background: #ddd;
+}
+.hero-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* يجعل الصورة تغطي كامل المساحة بشكل مرتب */
+    transition: transform 0.4s ease;
+}
+
+.hero-tile:hover img {
+    transform: scale(1.05);
+}
+    .hero-tile--digital { background-image: url("{% static 'images/digitl.png' %}"); }
+    .hero-tile--physical { background-image: url("{% static 'images/mlmos.jpg' %}"); }
+    
+    .tile-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* تغميق بسيط للصورة */
+    transition: background 0.3s ease;
+}
+
+.tile-content {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #111827;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+    .hero-tile:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+    .hero-tile:hover .tile-overlay {
+        background: rgba(0,0,0,0.2);
+    }
+
+    /* ====== Hero Preview Images ====== */
+    .hero-preview {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%; /* خليها تأخذ كامل العمود */
+    min-height: 180px; /* ارتفاع افتراضي متناسق */
+}
+
+    .hero-preview:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+    .hero-preview--digital { background-image: url("{% static 'images/digitl.png' %}"); }
+    .hero-preview--physical { background-image: url("{% static 'images/mlmos.jpg' %}"); }
+
+    /* ====== Hover Lift (Cards) ====== */
+    .hover-lift {
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 24px rgba(0,0,0,0.1) !important;
+    }
+
+    /* ====== Section Title ====== */
+    .section-title {
+        position: relative;
+        padding-bottom: 0.75rem;
+        font-weight: 700;
+    }
+    .section-title:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 60px;
+        height: 4px;
+        background: #4F46E5;
+        border-radius: 2px;
+    }
+
+    /* ====== Tabs Style ====== */
+    .nav-tabs {
+        border-bottom: 1px solid #E5E7EB;
+    }
+    .nav-tabs .nav-link {
+        border: none;
+        color: #6B7280;
+        font-weight: 500;
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        margin: 0 0.25rem;
+        transition: all 0.2s ease;
+    }
+    .nav-tabs .nav-link.active {
+        color: #4F46E5;
+        background-color: rgba(79, 70, 229, 0.1);
+        border: none;
+        font-weight: 600;
+    }
+    .nav-tabs .nav-link:hover {
+        color: #4F46E5;
+    }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 767.98px) {
+        .hero {
+            padding: 3rem 1.5rem;
+        }
+        .section-title:after {
+            right: 50%;
+            transform: translateX(50%);
+        }
+    }
+</style>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Activate tab from URL hash
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+        
+        if (type === 'digital') {
+            const digitalTab = new bootstrap.Tab(document.getElementById('digital-tab'));
+            digitalTab.show();
+        } else if (type === 'physical') {
+            const physicalTab = new bootstrap.Tab(document.getElementById('physical-tab'));
+            physicalTab.show();
+        }
+    });
+</script>
+{% endblock %}
