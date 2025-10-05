@@ -1,13 +1,14 @@
 from pathlib import Path
+import cloudinary
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# مفتاح Django
 SECRET_KEY = 'django-insecure-5uk7#ciq1l78cucq6-8vwm&56%nopo!3uyebg+fa_*l-d&$8bq'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,7 +18,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # التطبيقات الخاصة بالمشروع
+    # مكتبات خارجية
+    'cloudinary',
+    'cloudinary_storage',
+
+    # تطبيقات المشروع
     'identity',
     'catalog',
     'sales',
@@ -38,7 +43,6 @@ ROOT_URLCONF = 'shouqsalem.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # مسارات القوالب التي وضعتِها
         'DIRS': [
             BASE_DIR / 'templates',
             BASE_DIR / 'templates' / 'identityt',
@@ -60,6 +64,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'shouqsalem.wsgi.application'
 
 
+# قاعدة البيانات SQLite (ممكن تبدلها لاحقاً)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -67,41 +72,38 @@ DATABASES = {
     }
 }
 
-# تعريف موديل المستخدم المخصص
+# موديل المستخدم
 AUTH_USER_MODEL = "identity.Account"
 
-
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
 # اللغة والتوقيت
-LANGUAGE_CODE = 'ar'        # تعريب الواجهة
-TIME_ZONE = 'Asia/Riyadh'   # توقيت الرياض
+LANGUAGE_CODE = 'ar'
+TIME_ZONE = 'Asia/Riyadh'
 USE_I18N = True
 USE_TZ = True
 
+# الملفات الثابتة
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# الملفات الثابتة Static
-STATIC_URL = '/static/'                         # رابط الوصول للملفات الثابتة
-STATICFILES_DIRS = [BASE_DIR / 'static']        # مجلد التطوير (ضع فيه css/js/images)
-STATIC_ROOT = BASE_DIR / 'staticfiles'          # مجلد الجمع عند الإنتاج (collectstatic)
+# التخزين عبر Cloudinary
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
 
+MEDIA_URL = '/media/'
 
-# الملفات المرفوعة (وسائط المستخدم Media)
-MEDIA_URL = '/media/'                           # الرابط على الويب
-MEDIA_ROOT = BASE_DIR / 'media'                 # المجلد المحلي لحفظ الصور/الملفات
+# إعداد مفاتيح Cloudinary
+cloudinary.config(
+    cloud_name="daaxif6wc",
+    api_key="286238597463312",
+    api_secret="kONm5K0vSN8rVDnHI_XTQ1es0gA"
+)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
