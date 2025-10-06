@@ -8,6 +8,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # مفاتيح Django
 # ========================
 SECRET_KEY = config("DJANGO_SECRET_KEY")
+
+# ✅ قراءة DEBUG من env (True/False)
 DEBUG = config("DJANGO_DEBUG", default="False").lower() == "true"
 
 # السماح بالاتصال (من .env)
@@ -142,7 +144,6 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # التخزين عبر Cloudinary
 # ========================
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 MEDIA_URL = '/media/'
 
 cloudinary.config(
@@ -151,4 +152,7 @@ cloudinary.config(
     api_secret=config("CLOUDINARY_SECRET")
 )
 
+# ========================
+# الإعدادات العامة
+# ========================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
