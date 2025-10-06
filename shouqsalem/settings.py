@@ -1,6 +1,6 @@
 from pathlib import Path
 import cloudinary
-from decouple import config
+from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -9,7 +9,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ========================
 SECRET_KEY = config("DJANGO_SECRET_KEY")
 DEBUG = config("DJANGO_DEBUG", default="False").lower() == "true"
-ALLOWED_HOSTS = ["*"]
+
+# السماح بالاتصال (من .env)
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    default="127.0.0.1,localhost,0.0.0.0",
+    cast=Csv()
+)
 
 # ========================
 # التطبيقات المثبتة
@@ -78,7 +84,6 @@ WSGI_APPLICATION = 'shouqsalem.wsgi.application'
 # قاعدة البيانات
 # ========================
 if DEBUG:
-    # التطوير: SQLite
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -86,7 +91,6 @@ if DEBUG:
         }
     }
 else:
-    # الإنتاج: PostgreSQL
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -111,6 +115,13 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # ========================
+# إعدادات تسجيل الدخول/الخروج
+# ========================
+LOGIN_URL = '/identity/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# ========================
 # اللغة والتوقيت
 # ========================
 LANGUAGE_CODE = 'ar'
@@ -125,7 +136,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# WhiteNoise لتقديم الملفات الثابتة في الإنتاج
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ========================
@@ -135,7 +145,6 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MEDIA_URL = '/media/'
 
-# إعداد مفاتيح Cloudinary من env
 cloudinary.config(
     cloud_name=config("CLOUDINARY_NAME"),
     api_key=config("CLOUDINARY_KEY"),
