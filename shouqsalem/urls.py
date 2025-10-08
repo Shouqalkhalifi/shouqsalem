@@ -15,6 +15,8 @@ urlpatterns = [
     path('identity/', include('identity.urls')),
     path('catalog/', include('catalog.urls')),
     path('sales/', include('sales.urls')),
+    # حسابات Allauth (Google/Facebook)
+    path('accounts/', include('allauth.urls')),
 ]
 
 # إضافة روابط static و media في بيئة التطوير

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}تأكيد رمز الدخول{% endblock %}
+
+{% block content %}
+<div class="py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+      <div class="card shadow-sm" style="border-radius:.9rem;border:1px solid #eef2f7;">
+        <div class="card-body p-4 p-md-5">
+          <h1 class="h5 mb-3">أدخل رمز التحقق</h1>
+          <p class="text-muted">تم إرسال الرمز إلى: <strong>{{ phone }}</strong></p>
+          <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label">رمز مكوّن من 6 أرقام</label>
+              <input name="code" type="text" class="form-control" placeholder="______" minlength="6" maxlength="6" required>
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-primary" type="submit">تأكيد الدخول</button>
+            </div>
+          </form>
+          <div class="mt-3 d-flex justify-content-between">
+            <a href="{% url 'identity:phone_request' %}">تغيير الرقم</a>
+            <a href="{% url 'identity:login' %}">الدخول بطرق أخرى</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

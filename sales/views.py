@@ -5,6 +5,7 @@ from .models import Favorite, Order
 from catalog.models import Product
 from django.contrib import messages
 
+@login_required
 def cart_view(request):
     # إضافة إلى السلة عبر بارامتر ?add=<product_id>
     add_id = request.GET.get("add")

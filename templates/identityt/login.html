@@ -1,19 +1,135 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>تسجيل الدخول</title>
-  </head>
-  <body>
-    <h2>تسجيل الدخول</h2>
+{% extends 'base.html' %}
+{% block title %}تسجيل الدخول | متجر شوق{% endblock %}
 
-    <form method="post">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">تسجيل الدخول</button>
-    </form>
+{% block extra_css %}
+<style>
+  /* Card refinement */
+  #login-card { border:1px solid #eef2f7; border-radius:1.1rem; box-shadow:0 8px 30px rgba(2,6,23,.06); }
+  .login-sub { color:#6b7280; }
 
-    <p>
-      ليس لديك حساب؟ <a href="{% url 'identity:register' %}">إنشاء حساب جديد</a>
-    </p>
-  </body>
-</html>
+  /* Layout */
+  .social-wrap { gap: .9rem; }
+  .circle-icons { display:flex; justify-content:center; align-items:center; gap:1rem; margin-bottom:.75rem; }
+  .circle-btn { width:60px; height:60px; border-radius:50%; display:inline-grid; place-items:center; color:#fff; border:0; box-shadow:0 6px 18px rgba(17,24,39,.08); transition:transform .12s ease, opacity .2s ease; }
+  .circle-btn:hover { transform: translateY(-1px); }
+  .circle-btn[disabled] { opacity:.55; cursor:not-allowed; transform:none; box-shadow:none; }
+  .circle-google { background:linear-gradient(135deg,#EA4335,#C5221F); }
+  .circle-facebook { background:linear-gradient(135deg,#1877F2,#0d5bd8); }
+  .circle-phone { background:linear-gradient(135deg,#16a34a,#0f7a3b); }
+  .hint-muted { font-size:.85rem; color:#6b7280; }
+
+  /* Buttons */
+  .btn-social {
+    position: relative;
+    display:flex; align-items:center; justify-content:flex-start; gap:.9rem;
+    padding:.9rem 1.1rem; border-radius:1rem; border:0; font-weight:700;
+    color:#fff; box-shadow: 0 8px 22px rgba(17,24,39,.08);
+    transition: transform .12s ease, box-shadow .12s ease, opacity .2s ease;
+  }
+  .btn-social .brand {
+    display:inline-grid; place-items:center; width:36px; height:36px; border-radius:50%;
+    background:rgba(255,255,255,.18); color:#fff; font-size:16px;
+  }
+  .btn-social .txt { flex:1; text-align:center; letter-spacing:.2px; }
+  .btn-social:hover { transform: translateY(-1.5px); box-shadow:0 12px 28px rgba(17,24,39,.14); }
+  .btn-social[disabled] { opacity:.55; cursor:not-allowed; transform:none; box-shadow:none; }
+  .badge-soon { position:absolute; inset-inline-end:12px; top:8px; font-size:.72rem; background:#111827; color:#fff; border-radius:999px; padding:.15rem .55rem; opacity:.75; }
+
+  /* Brand colors */
+  .btn-google { background: linear-gradient(135deg,#EA4335,#C5221F); }
+  .btn-facebook { background: linear-gradient(135deg,#1877F2,#0d5bd8); }
+  .btn-phone { background: linear-gradient(135deg,#16a34a,#0f7a3b); }
+
+  /* Form polishing */
+  #login-card input[type="text"],
+  #login-card input[type="password"],
+  #login-card input[type="email"] {
+    display:block; width:100%; padding:.8rem 1rem; border:1px solid #e5e7eb; border-radius:.8rem; background:#fff;
+  }
+  #login-card input:focus { border-color:#4F46E5; box-shadow:0 0 0 .22rem rgba(79,70,229,.12); outline:none; }
+  #login-card label.form-label { font-weight:700; color:#111827; }
+  .soft-divider { display:flex; align-items:center; gap:.75rem; margin:1rem 0; }
+  .soft-divider::before, .soft-divider::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,transparent,#e5e7eb,transparent); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="py-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-5">
+      <div class="card shadow-sm" id="login-card" style="border-radius: .9rem; border:1px solid #eef2f7;">
+        <div class="card-body p-4 p-md-5">
+          <div class="text-center mb-4">
+            <img src="/static/images/nexa.png" alt="logo" style="height:60px;">
+            <h1 class="h5 mt-3 mb-1">مرحباً بك</h1>
+            <p class="login-sub mb-0">سجّل دخولك للمتابعة</p>
+          </div>
+
+          {% load socialaccount %}
+          <div class="circle-icons">
+            {% if social_providers and 'google' in social_providers %}
+              <a href="{% provider_login_url 'google' %}" class="circle-btn circle-google" aria-label="دخول Google" title="دخول Google"><i class="fab fa-google"></i></a>
+            {% else %}
+              <button class="circle-btn circle-google" type="button" disabled aria-label="Google (قريباً)" title="Google (قريباً)"><i class="fab fa-google"></i></button>
+            {% endif %}
+
+            {% if social_providers and 'facebook' in social_providers %}
+              <a href="{% provider_login_url 'facebook' %}" class="circle-btn circle-facebook" aria-label="دخول Facebook" title="دخول Facebook"><i class="fab fa-facebook-f"></i></a>
+            {% else %}
+              <button class="circle-btn circle-facebook" type="button" disabled aria-label="Facebook (قريباً)" title="Facebook (قريباً)"><i class="fab fa-facebook-f"></i></button>
+            {% endif %}
+
+            <button class="circle-btn circle-phone" type="button" disabled aria-label="الجوال (قريباً)" title="الجوال (قريباً)"><i class="fas fa-mobile-alt"></i></button>
+          </div>
+          <div class="soft-divider text-center">
+            <span class="px-2 text-muted small">أو دخول باستخدام كلمة المرور</span>
+          </div>
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {{ form.non_field_errors }}
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label">اسم المستخدم</label>
+              {{ form.username }}
+              {{ form.username.errors }}
+            </div>
+
+            <div class="mb-2">
+              <label class="form-label">كلمة المرور</label>
+              {{ form.password }}
+              {{ form.password.errors }}
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="rememberMe" name="remember" />
+                <label class="form-check-label" for="rememberMe">تذكرني</label>
+              </div>
+              <a href="/identity/password/reset/" class="small">نسيت كلمة المرور؟</a>
+            </div>
+
+            <div class="d-grid mt-3">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt ms-1"></i>
+                دخول
+              </button>
+            </div>
+          </form>
+
+          <div class="text-center mt-4">
+            <span class="text-muted">ليس لديك حساب؟</span>
+            <a href="{% url 'identity:register' %}" class="fw-semibold">إنشاء حساب جديد</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+

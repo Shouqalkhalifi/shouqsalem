@@ -1,17 +1,83 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <title>إنشاء حساب</title>
-  </head>
-  <body>
-    <h2>تسجيل حساب جديد</h2>
+{% extends "base.html" %}
+{% load i18n %}
 
-    <form method="post">
-      {% csrf_token %} {{ form.as_p }}
-      <button type="submit">إنشاء الحساب</button>
-    </form>
+{% block title %}إنشاء حساب{% endblock %}
 
-    <p>لديك حساب بالفعل؟ <a href="{% url 'identity:login' %}">سجل الدخول</a></p>
-  </body>
-</html>
+{% block extra_css %}
+<style>
+  .register-card {
+      max-width: 500px;
+      margin: 60px auto;
+      background: #fff;
+      padding: 35px 25px;
+      border-radius: 15px;
+      box-shadow: 0px 6px 20px rgba(0,0,0,0.08);
+  }
+  .register-card h3 {
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 25px;
+      text-align: center;
+  }
+  .form-label {
+      font-weight: 500;
+      margin-bottom: 5px;
+      display: block;
+  }
+  .form-control {
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #e0e0e0;
+  }
+  .form-control:focus {
+      border-color: #4a3aff;
+      box-shadow: 0 0 0 0.15rem rgba(74,58,255,0.25);
+  }
+  .btn-custom {
+      background-color: #4a3aff;
+      color: white;
+      font-weight: 600;
+      border-radius: 10px;
+      padding: 12px;
+      width: 100%;
+      transition: 0.3s;
+  }
+  .btn-custom:hover {
+      background-color: #372ecc;
+  }
+  .login-link {
+      text-align: center;
+      margin-top: 15px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="register-card">
+        <h3>تسجيل حساب جديد</h3>
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label">{{ field.label }}</label>
+                    {{ field }}
+                    <div class="text-danger small">{{ field.errors }}</div>
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-custom">إنشاء الحساب</button>
+        </form>
+
+        <div class="login-link">
+            <p>لديك حساب بالفعل؟ <a href="{% url 'identity:login' %}">سجل الدخول</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}
